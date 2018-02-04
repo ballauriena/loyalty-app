@@ -22,7 +22,7 @@ const CheckinsController = {
 	},
 	index: function(req, res, next) {
 		return Checkin
-			.aggregateByUser(req.params.userId)
+			.forUser(req.params.userId)
 			.then(function(checkinData) {
 				if (checkinData) {
 					res.status(200).json(checkinData);

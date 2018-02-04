@@ -1,4 +1,4 @@
-const knex = require('../db/knex.js');
+const UserQueries = require('../queries/userQueries.js');
 const phoneNumberUtils = require('../utils/phoneNumber.js');
 
 function User(data) {
@@ -19,15 +19,15 @@ function User(data) {
 }
 
 User.create = function(user) {
-	return knex('users').returning('id').insert(user);
+	return UserQueries.insert(user);
 }
 
 User.findByPhone = function(phone) {
-	return knex('users').where({ phone: phoneNumberUtils.sanitize(phone) }).first();
+	return UserQueries.findByField('phone', phoneNumberUtils.sanitize(phone));
 }
 
 User.findByEmail = function(email) {
-	return knex('users').where({ email: email }).first();
+	return UserQueries.findByField('email', email);
 }
 
 

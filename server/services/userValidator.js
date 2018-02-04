@@ -12,18 +12,6 @@ function UserValidator(user) {
 		return this.errors.join(' ');
 	}
 
-	this.isPhoneUnique = function() {
-		const errors = this.errors;
-
-		return User
-			.findByPhone(this.user.sanitizedPhone)
-			.then(function(user) {
-				if (user) errors.push("Duplicate phone number");
-			})
-			.catch(function(err) {
-				console.log(err);
-			})
-	}
 
 	this.isPhoneValid = function(val) {
 		const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -37,6 +25,19 @@ function UserValidator(user) {
 		const match = val.match(regex);
 
 		return match ? true : false;
+	}
+
+	this.isPhoneUnique = function() {
+		const errors = this.errors;
+
+		return User
+			.findByPhone(this.user.sanitizedPhone)
+			.then(function(user) {
+				if (user) errors.push("Duplicate phone number");
+			})
+			.catch(function(err) {
+				console.log(err);
+			})
 	}
 
 	this.isEmailUnique = function() {
