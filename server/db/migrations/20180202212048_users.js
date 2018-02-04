@@ -3,8 +3,8 @@ exports.up = function(knex, Promise) {
         t.increments('id').primary().notNullable();
         t.string('first_name').notNullable();
         t.string('last_name').notNullable();
+        t.string('phone').notNullable().unique().index();
         t.string('email').notNullable().unique();
-        t.string('phone').notNullable().unique();
         t.timestamps(true, true);
     });
 };

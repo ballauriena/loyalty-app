@@ -1,13 +1,14 @@
-var faker = require('faker');
+const faker = require('faker');
+const phoneNumberUtils = require('../../utils/phoneNumber.js');
+const User = require('../../models/user.js');
 
-var fakeUsers = []
-for (i = 0; i < 30; i++) {
+const fakeUsers = []
+for (i = 1; i < 31; i++) {
     fakeUsers.push({
-        id: i,
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
-        email: faker.internet.email(),
-        phone: faker.phone.phoneNumber()
+        phone: phoneNumberUtils.sanitize(faker.phone.phoneNumber()),
+        email: faker.internet.email()
     });
 }
 
@@ -15,40 +16,42 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function createInitialCheckin(knex, user) {
+function createUser(knex, user) {
+    return knex
+        .table('users')
+        .returning('id')
+        .insert(user)
+        .then(function(ids) {
+            const promises = [];
+
+            promises.push(createInitialCheckin(knex, ids[0]));
+            for (var i = 0; i <= randomInt(1,5); i++) {
+                promises.push(createOtherCheckin(knex, ids[0]));
+            }
+
+            return Promise.all(promises);
+        })
+}
+
+function createInitialCheckin(knex, userId) {
     return knex('checkins').insert({
-        user_id: user.id,
+        user_id: userId,
         points: 50
     })
 }
 
-function createOtherCheckin(knex, user) {
+function createOtherCheckin(knex, userId) {
     return knex('checkins').insert({
-        user_id: user.id,
+        user_id: userId,
         points: 20
     })
 }
 
 exports.seed = function(knex, Promise) {
-    return knex('checkins').del()
-        .then(function() {
-            return knex('users').del()
-        })
-        .then(function() {
-            return knex('users').insert(fakeUsers);
-        })
-        .then(function () {
+    const promises = [];
+    fakeUsers.forEach(function(user) {
+        promises.push(createUser(knex, user));
+    });
 
-            var promises = [];
-            fakeUsers.forEach(function(user) {
-                promises.push(createInitialCheckin(knex, user));
-
-                var num = randomInt(1, 5)
-                for (var i = 0; i <= num; i++) {
-                    promises.push(createOtherCheckin(knex, user));
-                }
-            });
-
-            return Promise.all(promises);
-        });
-};
+    return Promise.all(promises);
+}
