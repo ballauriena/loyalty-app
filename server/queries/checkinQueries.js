@@ -20,6 +20,14 @@ function CheckinQueries() {
 				.orderBy('created_at', 'desc')
 				.first();
 	}
+
+	this.aggregateCheckinData = function(userId) {
+		return knex.select('users.*', knex.raw('SUM(checkins.points) as total_points'), knex.raw('COUNT(checkins.id) as total_checkins'))
+			.from('checkins')
+			.join('users', 'users.id', 'checkins.user_id')
+			.where('users.id', userId)
+			.groupBy('users.id');
+	}
 }
 
 module.exports = new CheckinQueries();

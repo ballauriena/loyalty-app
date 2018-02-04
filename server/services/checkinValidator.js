@@ -15,7 +15,7 @@ function CheckinValidator(userId) {
 
 	this.run = function() {
 		const errors = this.errors;
-		console.log(Checkin.mostRecentForUser(this.userId))
+
 		return Checkin
 			.mostRecentForUser(this.userId)
 			.then(function(result) {

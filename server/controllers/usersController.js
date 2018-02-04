@@ -12,10 +12,11 @@ const UsersController = {
 				return User
 					.create(user.toRecord())
 					.then(function(userIds) {
-						Checkin
-							.create(userIds[0], 50)
+						const checkin = new Checkin(userIds[0], 50);
+
+						return checkin.generate()
 							.then(function() {
-								res.status(201).send({ userId: userIds[0] });
+								res.status(201).send({ userId: checkin.userId });
 							})
 							.catch(function(err) {
 								next(err);

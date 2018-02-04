@@ -10,7 +10,6 @@ const checkinsController = require('./controllers/checkinsController.js');
 
 app.use(bodyParser.json());
 
-
 app.use('/api/v1/users', usersRouter);
 usersRouter.post('/', usersController.create);
 usersRouter.get("/:phone", usersController.show);

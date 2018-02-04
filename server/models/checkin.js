@@ -1,14 +1,43 @@
 const knex = require('../db/knex.js');
 const CheckinQueries = require('../queries/checkinQueries.js');
+const Mailer = require('./../services/mailer.js');
 
-function Checkin() {}
+function Checkin(userId, points = 20) {
+	this.userId = userId;
+	this.points = points;
 
-Checkin.create = function(userId, points = 20) {
-	const checkin = {
-		user_id: parseInt(userId),
-		points: points
-	};
+	this.toRecord = function() {
+		return {
+			user_id: this.userId,
+			points: this.points
+		}
+	}
 
+	this.generate = function() {
+		const self = this;
+
+		return Checkin
+			.create(this.toRecord())
+			.then(function() {
+				self.triggerEmail();
+			})
+			.catch(function(err) {
+				console.log(err);
+			})
+	}
+
+	this.triggerEmail = function() {
+		return Checkin.aggregateDataForUser(this.userId)
+			.then((data) => {
+				new Mailer(data[0].email, data[0].total_points, data[0].total_checkins).send();
+			})
+			.catch(function(err) {
+				console.log(err)
+			})
+	}
+}
+
+Checkin.create = function(checkin) {
 	return CheckinQueries.insert(checkin);
 }
 
@@ -18,6 +47,15 @@ Checkin.forUser = function(userId) {
 
 Checkin.mostRecentForUser = function(userId) {
 	return CheckinQueries.mostRecentForUser(userId);
+}
+
+Checkin.aggregateDataForUser = function(userId) {
+	// return CheckinQueries.aggregateCheckinData(parseInt(this.userId));
+	return knex.select('users.*', knex.raw('SUM(checkins.points) as total_points'), knex.raw('COUNT(checkins.id) as total_checkins'))
+		.from('checkins')
+		.join('users', 'users.id', 'checkins.user_id')
+		.where('users.id', userId)
+		.groupBy('users.id');
 }
 
 module.exports = Checkin;

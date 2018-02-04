@@ -8,9 +8,11 @@ const CheckinsController = {
 
 		return validator.run().then(function() {
 			if (validator.isPassing()) {
-				return Checkin.create(userId)
-					.then(function(checkinIds) {
-						res.status(201).send({ checkinId: checkinIds[0] })
+				const checkin = new Checkin(userId)
+
+				return checkin.generate()
+					.then(function() {
+						res.status(201).send({ userId: checkin.userId })
 					})
 					.catch(function(err) {
 						next(err);
