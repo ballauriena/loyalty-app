@@ -2,8 +2,8 @@ const UserQueries = require('../queries/userQueries.js');
 const phoneNumberUtils = require('../utils/phoneNumber.js');
 
 function User(data) {
-	this.firstName = data.firstName;
-	this.lastName = data.lastName;
+	this.firstName = data.first_name;
+	this.lastName = data.last_name;
 	this.email = data.email;
 	this.phone = data.phone;
 	this.sanitizedPhone = phoneNumberUtils.sanitize(this.phone);

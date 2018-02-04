@@ -15,9 +15,9 @@ function CheckinValidator(userId) {
 
 	this.run = function() {
 		const errors = this.errors;
-
+		console.log(Checkin.mostRecentForUser(this.userId))
 		return Checkin
-			.mostRecentByUser(this.userId)
+			.mostRecentForUser(this.userId)
 			.then(function(result) {
 				const diff = moment().diff(moment(result.created_at), 'minutes');
 				if (diff < 5) errors.push('Must wait 5 minutes between checkins.');

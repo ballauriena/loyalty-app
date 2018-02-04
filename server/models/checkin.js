@@ -16,9 +16,8 @@ Checkin.forUser = function(userId) {
 	return CheckinQueries.filterBy('user_id', userId);
 }
 
-Checkin.mostRecentByUser = function(userId) {
-	const filteredByUser = CheckinQueries.filterBy('user_id', userId);
-	return CheckinQueries.mostRecent('created_at')(filteredByUser);
+Checkin.mostRecentForUser = function(userId) {
+	return CheckinQueries.mostRecentForUser(userId);
 }
 
 module.exports = Checkin;

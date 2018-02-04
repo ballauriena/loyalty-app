@@ -13,10 +13,12 @@ function CheckinQueries() {
 		return this.base().where(field, val);
 	}
 
-	this.mostRecent = function(timeField) {
-		return function(query) {
-			query.orderBy(timeField, 'desc').first();
-		}
+	this.mostRecentForUser = function(userId) {
+		return knex.select('*')
+				.from(this.tableName)
+				.where('user_id', userId)
+				.orderBy('created_at', 'desc')
+				.first();
 	}
 }
 

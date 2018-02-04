@@ -3,7 +3,7 @@ const CheckinValidator = require('../services/checkinValidator.js');
 
 const CheckinsController = {
 	create: function(req, res, next) {
-		const userId = req.params.userId;
+		const userId = parseInt(req.params.userId);
 		const validator = new CheckinValidator(userId);
 
 		return validator.run().then(function() {

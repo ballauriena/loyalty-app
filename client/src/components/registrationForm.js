@@ -20,19 +20,19 @@ const RegistrationForm = {
 		return m("form", { class: "ui form", onsubmit: handleRegister }, [
 			m("div", { class: "field", id: "phone" }, [
 				m("label", "Phone Number"),
-				m("input", { type: "tel", placeholder: "Phone Number", oninput: m.withAttr("value", state.actions.setPhone), value: state.store.phone })
+				m("input", { type: "tel", placeholder: "Phone Number", oninput: m.withAttr("value", state.store.phone), value: state.store.phone })
 			]),
 			m("div", { class: "field", id: "firstName" }, [
 				m("label", "First Name"),
-				m("input", { type: "text", placeholder: "First Name", oninput: m.withAttr("value", state.actions.setFirstName), value: state.store.firstName })
+				m("input", { type: "text", placeholder: "First Name", oninput: m.withAttr("value", state.store.firstName), value: state.store.firstName })
 			]),
 			m("div", { class: "field", id: "lastName" }, [
 				m("label", "Last Name"),
-				m("input", { type: "text", placeholder: "Last Name", oninput: m.withAttr("value", state.actions.setLastName), value: state.store.lastName })
+				m("input", { type: "text", placeholder: "Last Name", oninput: m.withAttr("value", state.store.lastName), value: state.store.lastName })
 			]),
 			m("div", { class: "field", id: "email" }, [
 				m("label", "Email"),
-				m("input", { type: "text", placeholder: "Email", oninput: m.withAttr("value", state.actions.setEmail), value: state.store.email })
+				m("input", { type: "text", placeholder: "Email", oninput: m.withAttr("value", state.store.email), value: state.store.email })
 			]),
 			m("button", { type: "submit", class: "ui basic massive olive button" }, "Check In")
 		]);
