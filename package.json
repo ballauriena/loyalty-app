@@ -24,6 +24,7 @@
     "faker": "^4.1.0",
     "knex": "^0.14.2",
     "mithril": "^1.1.6",
+    "moment": "^2.20.1",
     "pg": "^7.4.1"
   },
   "devDependencies": {
