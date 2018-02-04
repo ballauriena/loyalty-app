@@ -12,8 +12,14 @@ const UsersController = {
 				return User
 					.create(user.toRecord())
 					.then(function(userIds) {
-						Checkin.create(userIds[0], 50);
-						res.status(201).send({ userId: userIds[0] });
+						Checkin
+							.create(userIds[0], 50)
+							.then(function() {
+								res.status(201).send({ userId: userIds[0] });
+							})
+							.catch(function(err) {
+								next(err);
+							});
 					})
 					.catch(function(err) {
 						next(err);

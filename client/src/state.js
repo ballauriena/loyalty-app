@@ -29,7 +29,6 @@ const actions = {
 
 	validatePhone: function() {
 		const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-		console.log(state.phone());
 		const match = state.phone().match(regex);
 
 		if (match) {
