@@ -16,7 +16,7 @@ const UsersController = {
 		const phone = phoneNumberUtils.sanitize(req.params.phone);
 
 		return model
-			.find(phone)
+			.findByPhone(phone)
 			.then(function(user) {
 				if (user) {
 					res.status(200).json(user);
