@@ -1,5 +1,5 @@
 const Popup = {
-    show: function(content) {
+    show: function(msgs) {
         m.render(
             document.getElementById("popup"),
             m("div.ui.message.error", [
@@ -8,7 +8,7 @@ const Popup = {
                         m.render(document.getElementById("popup"), null);
                     }
                 }),
-                m("div", m("p", content))
+                m("div", msgs.map(function(msg) { return m("li", msg)}))
             ])
         );
         setTimeout(this.close, 5000);

@@ -14,11 +14,6 @@ Checkin.create = function(userId, points = 20) {
 
 Checkin.forUser = function(userId) {
 	return CheckinQueries.filterBy('user_id', userId);
-	// return knex.select('users.*', knex.raw('SUM(checkins.points) as total_points'), knex.raw('COUNT(checkins.id) as total_checkins'))
-	// 	.from('checkins')
-	// 	.join('users', 'users.id', 'checkins.user_id')
-	// 	.where('users.id', userId)
-	// 	.groupBy('users.id')
 }
 
 Checkin.mostRecentByUser = function(userId) {

@@ -1,13 +1,9 @@
-const Checkin = require("./components/checkin.js");
+const CheckinForm = require("./components/checkinForm.js");
 const Dashboard = require("./components/dashboard.js");
 
 m.route(document.getElementsByTagName("main")[0], "/", {
-	"/": Checkin,
-	"/dashboard/:key": {
-		onmatch: function(args, requestedPath) {
-
-		}
-	}
+	"/": CheckinForm,
+	"/dashboard": Dashboard
 	// "/": {
 	// 	onmatch: function (args, requestedPath) {
 	// 		return m.request({
