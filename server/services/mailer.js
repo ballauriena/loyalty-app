@@ -1,18 +1,17 @@
 const nodemailer = require('nodemailer');
 
 const Mailer = function(recipientEmail, points, checkins) {
-
 	this.transporter = nodemailer.createTransport({
-	    host: 'smtp.ethereal.email',
-	    port: 587,
+	    host: process.env.MAIL_HOST,
+	    port: process.env.MAIL_PORT,
 	    auth: {
-	        user: 'ehbitrqk2gnm4k42@ethereal.email',
-	        pass: 'b3GxXGCXEqVjAfw7jy'
+	        user: process.env.MAIL_USER,
+	        pass: process.env.MAIL_PASSWORD
 	    }
 	});
 
 	this.options = {
-		from: 'test@loyaltyapp.com',
+		from: process.env.MAIL_SENDER,
 		to: recipientEmail,
 		subject: 'Thanks for checking in!',
 		text: `Congratulations! You have checked in ${checkins} times, and have earned a grand total of ${points} points!`

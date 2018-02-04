@@ -21,12 +21,7 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: {
-      host:     process.env.DB_HOST,
-      user:     process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: 'loyalty_app'
-    },
+    connection: process.env.DB_CONNECTION_STRING,
     migrations: {
       directory: __dirname + '/server/db/migrations'
     },
