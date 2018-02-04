@@ -1,4 +1,3 @@
-require('dotenv').load();
 const path = require('path');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
@@ -29,10 +28,6 @@ module.exports = {
 		]
 	},
 	plugins: [
-        new Dotenv({
-            path: './.env',
-            safe: true // load .env.example (defaults to "false" which does not use dotenv-safe)
-        }),
 		new CleanWebpackPlugin(['client/dist']),
         new HtmlWebpackPlugin({
             template: './client/src/index.html'

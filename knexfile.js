@@ -1,32 +1,32 @@
 module.exports = {
-  test: {
-    client: 'pg',
-    connection: 'postgres://localhost/loyalty_app_test',
-    migrations: {
-      directory: __dirname + '/server/db/migrations'
+    test: {
+        client: 'pg',
+        connection: {
+            host:     process.env.DB_HOST,
+            user:     process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
+        },
+        migrations: {
+            directory: __dirname + '/server/db/migrations'
+        },
+        seeds: {
+            directory: __dirname + '/server/db/seeds'
+        }
     },
-    seeds: {
-      directory: __dirname + '/server/db/seeds'
+    development: {
+        client: 'pg',
+        connection: {
+            host:     process.env.DB_HOST,
+            user:     process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME
+        },
+        migrations: {
+            directory: __dirname + '/server/db/migrations'
+        },
+        seeds: {
+            directory: __dirname + '/server/db/seeds'
+        }
     }
-  },
-  development: {
-    client: 'pg',
-    connection: 'postgres://localhost/loyalty_app',
-    migrations: {
-      directory: __dirname + '/server/db/migrations'
-    },
-    seeds: {
-      directory: __dirname + '/server/db/seeds'
-    }
-  },
-  production: {
-    client: 'pg',
-    connection: process.env.DB_CONNECTION_STRING,
-    migrations: {
-      directory: __dirname + '/server/db/migrations'
-    },
-    seeds: {
-      directory: __dirname + '/server/db/seeds'
-    }
-  }
 };
