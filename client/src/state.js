@@ -22,7 +22,7 @@ const actions = {
 	clearErrors: function(msgs) { state.errors = [] },
 	addError: function(msg) { state.errors.push(msg) },
 	addErrorField: function(fieldId) { state.errorFields.push(fieldId) },
-	setTotalCheckins: function() { state.totalCheckins = checkins.length },
+	setTotalCheckins: function() { state.totalCheckins = state.checkins.length },
 	setTotalPoints: function() {
 		state.totalPoints = state.checkins.reduce(function(total, checkin) {
 			return total + checkin.points;
@@ -74,7 +74,7 @@ const actions = {
 	getCheckinsByUser: function() {
 		return m.request({
 			method: "GET",
-			url: `/api/v1/${state.user.id}/checkins`
+			url: `/api/v1/users/${state.user.id}/checkins`
 		})
 			.then(function(response) {
 				actions.setCheckins(response);
@@ -93,15 +93,12 @@ const actions = {
 			.then(function(response) {
 				actions.setUser(response);
 			})
-			// .then(function() {
-			// 	actions.getCheckinsByUser();
-			// })
-			// .then(function() {
-			// 	m.route.set(`/dashboard/${state.user.id}`);
-			// })
-			// .catch(function(err) {
-			// 	console.log(err);
-			// })
+			.then(function() {
+				actions.getCheckinsByUser();
+			})
+			.then(function() {
+				m.route.set("/dashboard");
+			})
 	},
 
 	registerUser: function() {
@@ -125,7 +122,7 @@ const actions = {
 				actions.getCheckinsByUser();
 			})
 			.then(function() {
-				m.route.set("dashboard");
+				m.route.set("/dashboard");
 			})
 			.catch(function(err) {
 				console.log(err);
