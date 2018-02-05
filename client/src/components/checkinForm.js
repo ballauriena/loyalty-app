@@ -35,12 +35,14 @@ const CheckinForm = {
 		state.store.phone("");
 	},
 	view: function() {
-		return m("form", { class: "ui form", onsubmit: handleCheckin }, [
-			m("div", { class: "field", id: "phone" }, [
-				m("label", "Phone Number"),
-				m("input", { type: "tel", placeholder: "Phone Number", oninput: m.withAttr("value", state.store.phone), value: state.store.phone })
-			]),
-			m("button", { type: "submit", class: "ui basic massive olive button" }, "Check In")
+		return m("div", { class: "ui raised very padded text container segment" }, [
+			m("form", { class: "ui form", onsubmit: handleCheckin }, [
+				m("div", { class: "field", id: "phone" }, [
+					m("label", "Phone Number"),
+					m("input", { type: "tel", placeholder: "Phone Number", oninput: m.withAttr("value", state.store.phone), value: state.store.phone })
+				]),
+				m("button", { type: "submit", class: "ui basic massive olive button" }, "Check In")
+			])
 		]);
 	}
 }

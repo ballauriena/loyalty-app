@@ -6,7 +6,7 @@ function handleCheckout() {
 
 const Dashboard = {
 	view: function() {
-		return m("div", {}, [
+		return m("div", { class: "ui raised very padded text container segment" }, [
 			m("h1", { class: "ui icon header" }, [
 				m("i", { class: "star half empty icon" }),
 				m("div", { class: "content" }, [
