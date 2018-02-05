@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -7,10 +8,7 @@ module.exports = {
 	entry: './client/src/index.js',
 	devtool: 'eval-source-map',
 	devServer: {
-		port: process.env.CLIENT_PORT,
-        proxy: {
-            '/api/v1': 'http://localhost:3000'
-        }
+		port: process.env.CLIENT_PORT
 	},
 	output: {
         path: path.resolve(__dirname, 'client/dist/'),
@@ -27,6 +25,9 @@ module.exports = {
 		]
 	},
 	plugins: [
+        new Dotenv({
+            path: './.env'
+        }),
 		new CleanWebpackPlugin(['client/dist']),
         new HtmlWebpackPlugin({
             template: './client/src/index.html'
