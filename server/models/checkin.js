@@ -50,12 +50,7 @@ Checkin.mostRecentForUser = function(userId) {
 }
 
 Checkin.aggregateDataForUser = function(userId) {
-	// return CheckinQueries.aggregateCheckinData(parseInt(this.userId));
-	return knex.select('users.*', knex.raw('SUM(checkins.points) as total_points'), knex.raw('COUNT(checkins.id) as total_checkins'))
-		.from('checkins')
-		.join('users', 'users.id', 'checkins.user_id')
-		.where('users.id', userId)
-		.groupBy('users.id');
+	return CheckinQueries.aggregateCheckinData(userId);
 }
 
 module.exports = Checkin;
