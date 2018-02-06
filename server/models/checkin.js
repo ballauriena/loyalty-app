@@ -1,4 +1,3 @@
-const knex = require('../db/knex.js');
 const CheckinQueries = require('../queries/checkinQueries.js');
 const Mailer = require('./../services/mailer.js');
 

@@ -1,8 +1,9 @@
-const RegistrationForm = require("./registrationForm.js");
-const Popup = require("./popup.js");
 const state = require('../state.js');
+const Popup = require("./popup.js");
 
-function handleCheckin() {
+function handleCheckin(e) {
+    e.preventDefault();
+
     if (state.actions.validatePhone()) {
         state.actions.getUserByPhone()
             .then(function() {
@@ -13,10 +14,7 @@ function handleCheckin() {
                     })
             })
             .catch(function() {
-                state.store.errorFields.forEach(function(id) {
-                    document.getElementById(id).classList.remove("error");
-                });
-                mountRegistrationForm();
+                m.route.set("/register");
             })
     } else {
         Popup.show(state.store.errors);
@@ -26,16 +24,12 @@ function handleCheckin() {
     }
 }
 
-function mountRegistrationForm() {
-    m.mount(document.getElementsByTagName("form")[0], RegistrationForm)
-}
-
 const CheckinForm = {
     onremove: function() {
         state.store.phone("");
     },
     view: function() {
-        return m("div", { class: "ui raised very padded text container segment" }, [
+        return m("div", { class: "ui raised very padded text container segment", id: "formHolder" }, [
             m("form", { class: "ui form", onsubmit: handleCheckin }, [
                 m("div", { class: "field", id: "phone" }, [
                     m("label", "Phone Number"),

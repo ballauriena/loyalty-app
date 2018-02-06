@@ -131,9 +131,6 @@ const actions = {
             .then(function() {
                 m.route.set("/dashboard");
             })
-            .catch(function(err) {
-                console.log(err);
-            })
     }
 }
 
